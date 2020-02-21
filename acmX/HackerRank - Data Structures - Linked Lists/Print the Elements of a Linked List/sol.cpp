@@ -1,88 +1,134 @@
 #include <bits/stdc++.h>
-#include <vector>
 
 using namespace std;
 
-class Node
-{
+class DoublyLinkedListNode {
     public:
-    int data;
-    Node *next;
+        int data;
+        DoublyLinkedListNode *next;
+        DoublyLinkedListNode *prev;
+
+        DoublyLinkedListNode(int node_data) {
+            this->data = node_data;
+            this->next = nullptr;
+            this->prev = nullptr;
+        }
 };
 
-Node* head = NULL;
+class DoublyLinkedList {
+    public:
+        DoublyLinkedListNode *head;
+        DoublyLinkedListNode *tail;
 
-void addHead(int nData)
-{
-    Node* newNode = new Node();
-    
+        DoublyLinkedList() {
+            this->head = nullptr;
+            this->tail = nullptr;
+        }
+
+        void insert_node(int node_data) {
+            DoublyLinkedListNode* node = new DoublyLinkedListNode(node_data);
+
+            if (!this->head) {
+                this->head = node;
+            } else {
+                this->tail->next = node;
+                node->prev = this->tail;
+            }
+
+            this->tail = node;
+        }
+};
+
+void print_doubly_linked_list(DoublyLinkedListNode* node, string sep, ofstream& fout) {
+    while (node) {
+        fout << node->data;
+
+        node = node->next;
+
+        if (node) {
+            fout << sep;
+        }
+    }
 }
 
-void del(int pos)
-{
-    Node *last = head;
-    Node *last2;
-    for(int i = 1; i < pos; i++)
-    {
-        last = last->next;
+void free_doubly_linked_list(DoublyLinkedListNode* node) {
+    while (node) {
+        DoublyLinkedListNode* temp = node;
+        node = node->next;
+
+        free(temp);
     }
-    
-    last2 = last->next;
-
-    last->next = last2->next;
-
 }
 
-void insert(int data, int pos)
-{
-    Node *newNode = new Node();
-    Node *last = head;
-    newNode->data = data;
-    for(int i = 1; i < pos; i++)
-    {
+// Complete the reverse function below.
+
+/*
+ * For your reference:
+ *
+ * DoublyLinkedListNode {
+ *     int data;
+ *     DoublyLinkedListNode* next;
+ *     DoublyLinkedListNode* prev;
+ * };
+ *
+ */
+DoublyLinkedListNode* reverse(DoublyLinkedListNode* head) {
+
+        DoublyLinkedListNode *last = head;
+        DoublyLinkedListNode *last2;
+
+        last2 = head;
+        last2->prev = NULL;
         last = last->next;
-    }
+        last2->next = NULL;
+        while(last->next != NULL)
+        {
+            last->prev = last->next;
+            last->next = last2;
 
-    newNode->next = last->next;
-    last->next = newNode;
-}
+            last2 = last;
+            last = last->prev;    
+        }
 
-void add(int nData)
-{
-    Node* newNode = new Node();
-    Node *last = head;
-    newNode->data = nData;
-    newNode->next = NULL;
+        last->next = last2;
+        last->prev = NULL;
 
-    if(head == NULL)
-    {
-        head = newNode;
-        return;
-    }
+        return last;
 
-    while(last->next != NULL)
-        last = last->next;
-
-    last->next = newNode;
-}
-
-void print()
-{
-    Node *last = head;
-    while(last!=NULL)
-    {
-        cout <<last->data<< endl;
-        last = last->next;
-    }
 }
 
 int main()
 {
-    add(5);
-    add(6);
-    add(7);
-    insert(8,1);
-    del(2);
-    print();
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    int t;
+    cin >> t;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    for (int t_itr = 0; t_itr < t; t_itr++) {
+        DoublyLinkedList* llist = new DoublyLinkedList();
+
+        int llist_count;
+        cin >> llist_count;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        for (int i = 0; i < llist_count; i++) {
+            int llist_item;
+            cin >> llist_item;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            llist->insert_node(llist_item);
+        }
+
+        DoublyLinkedListNode* llist1 = reverse(llist->head);
+
+        print_doubly_linked_list(llist1, " ", fout);
+        fout << "\n";
+
+        free_doubly_linked_list(llist1);
+    }
+
+    fout.close();
+
     return 0;
 }
