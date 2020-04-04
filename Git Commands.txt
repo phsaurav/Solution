@@ -1,12 +1,51 @@
-echo "# Mess_Planner_Project" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git remote add origin https://github.com/phsaurav/Mess_Planner_Project.git
 git push -u origin master
-
 git remote add origin https://github.com/phsaurav/Mess_Planner_Project.git
 git push -u origin master
 touch test.txt
 mkdir folder name
 check
+
+# To control your repository
+git add -A		(add all)
+git reset filename		(unadd a file)
+git reset		(unadd all)
+git commit -m "message"		(commit added file)
+git log		(log of last commit)
+
+# To control remote repository
+git clone link .		(. to clone into the current folder)
+git remote -v
+git branch -a
+git diff
+git status
+git add -A
+git commit -m "message"
+
+#master branch
+git pull origin master
+git push origin master
+
+#Other branch
+git branch branch-name		(creating a branch)
+git branch		(display all local branch)
+git checkout branch-name		(Start working on a branch)
+git push -u origin branch-name		(First time)
+git push		(Future)
+git pull
+
+#Merging with Master branch
+git checkout master
+git pull origin master
+git branch --marged			(To see which branch are marged)
+git merge branch-name
+
+git push origin master
+
+#Deleting branch
+git branch --marged			(To Check)
+git branch -d calc-divide	(To delete from local repo)
+git push origin --delete branch-name
