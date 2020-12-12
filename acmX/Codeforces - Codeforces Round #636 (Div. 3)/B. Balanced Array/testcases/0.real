@@ -1,0 +1,12 @@
+  [ temp = 4 ]
+NO
+  [ temp = 6 ]
+YES
+2 4 1 5
+  [ temp = 8 ]
+NO
+  [ temp = 10 ]
+YES
+2 4 6 8 1 3 5 11
+  [ temp = 12 ]
+NO
